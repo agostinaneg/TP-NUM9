@@ -1,0 +1,168 @@
+
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Alumno {
+private:
+    string nombre;
+    int edad;
+    double nota1, nota2, nota3;
+    string estado;
+
+public:
+    Alumno(string nombre, int edad, double nota1, double nota2, double nota3) {
+        this->nombre = nombre;
+        this->edad = edad;
+        this->nota1 = nota1;
+        this->nota2 = nota2;
+        this->nota3 = nota3;
+        actualizarEstado();
+    }
+
+
+    string getNombre() const {
+        return nombre;
+    }
+
+    int getEdad() const {
+        return edad;
+    }
+
+    double getNota1() const {
+        return nota1;
+    }
+
+    double getNota2() const {
+        return nota2;
+    }
+
+    double getNota3() const {
+        return nota3;
+    }
+
+    string getEstado() const {
+        return estado;
+    }
+
+    double calcularPromedio() const {
+        return (nota1 + nota2 + nota3) / 3;
+    }
+
+    
+    void actualizarEstado() {
+        if (calcularPromedio() >= 7) {
+            estado = "Aprobado";
+        } else {
+            estado = "Desaprobado";
+        }
+    }
+
+ 
+    double notaMasAlta() const {
+        double mayor = nota1;
+
+        if (nota2 > mayor) {
+            mayor = nota2;
+        }
+
+        if (nota3 > mayor) {
+            mayor = nota3;
+        }
+
+        return mayor;
+    }
+
+  
+    double notaMasBaja() const {
+        double menor = nota1;
+
+        if (nota2 < menor) {
+            menor = nota2;
+        }
+
+        if (nota3 < menor) {
+            menor = nota3;
+        }
+
+        return menor;
+    }
+};
+
+int main() {
+    vector<Alumno> alumnos;
+
+    string nombre;
+    int edad;
+    double nota1, nota2, nota3;
+
+    for (int i = 0; i < 3; i++) {
+        cout << "\nIngrese el nombre del alumno: ";
+        cin >> nombre;
+
+        cout << "Ingrese la edad: ";
+        cin >> edad;
+
+        cout << "Ingrese la nota 1: ";
+        cin >> nota1;
+
+        cout << "Ingrese la nota 2: ";
+        cin >> nota2;
+
+        cout << "Ingrese la nota 3: ";
+        cin >> nota3;
+
+        alumnos.push_back(Alumno(nombre, edad, nota1, nota2, nota3));
+    }
+
+
+    cout << " \nDATOS DE LOS ALUMNOS " << endl;
+
+    for (int i = 0; i < alumnos.size(); i++) {
+        cout << "\nNombre: " << alumnos[i].getNombre() << endl;
+        cout << "Edad: " << alumnos[i].getEdad() << endl;
+        cout << "Nota 1: " << alumnos[i].getNota1() << endl;
+        cout << "Nota 2: " << alumnos[i].getNota2() << endl;
+        cout << "Nota 3: " << alumnos[i].getNota3() << endl;
+        cout << "Promedio: " << alumnos[i].calcularPromedio() << endl;
+        cout << "Estado: " << alumnos[i].getEstado() << endl;
+        cout << "Nota mas alta: " << alumnos[i].notaMasAlta() << endl;
+        cout << "Nota mas baja: " << alumnos[i].notaMasBaja() << endl;
+    }
+
+    
+    string buscarNombre;
+    bool encontrado = false;
+
+    cout << "\nIngrese el nombre del alumno que desea buscar: ";
+    cin >> buscarNombre;
+
+    for (int i = 0; i < alumnos.size(); i++) {
+        if (alumnos[i].getNombre() == buscarNombre) {
+            cout << "\nAlumno encontrado." << endl;
+            cout << "Nombre: " << alumnos[i].getNombre() << endl;
+            cout << "Edad: " << alumnos[i].getEdad() << endl;
+            cout << "Promedio: " << alumnos[i].calcularPromedio() << endl;
+            cout << "Estado: " << alumnos[i].getEstado() << endl;
+
+            encontrado = true;
+        }
+    }
+
+    if (encontrado == false) {
+        cout << "No se encontro al alumno." << endl;
+    }
+
+   
+    double sumaPromedios = 0;
+
+    for (int i = 0; i < alumnos.size(); i++) {
+        sumaPromedios = sumaPromedios + alumnos[i].calcularPromedio();
+    }
+
+    cout << "\nPromedio general de todos los alumnos: "
+         << sumaPromedios / alumnos.size() << endl;
+
+    return 0;
+}
